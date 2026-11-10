@@ -11,5 +11,6 @@ while is_game_running:
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
 			is_game_running = False
+	print("Game is running...")
 
 pygame.quit()
