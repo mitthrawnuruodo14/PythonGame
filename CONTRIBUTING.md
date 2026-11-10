@@ -21,6 +21,7 @@ uv run python main.py
 
 optionally, you can also activate the virtual enviroment and run python directly
 ```bash
+source .venv/bin/activate
 python main.py
 ```
 
