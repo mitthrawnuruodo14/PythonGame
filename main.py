@@ -1,10 +1,9 @@
 import pygame
-
+from gamefiles import settings
 pygame.init()
 
-RESOLUTION = WIDTH, HEIGHT = 800, 600
 
-screen = pygame.display.set_mode(RESOLUTION)
+screen = pygame.display.set_mode(settings.RESOLUTION)
 
 is_game_running = True
 while is_game_running:
