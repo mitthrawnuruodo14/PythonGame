@@ -1,6 +1,6 @@
 class Game:
 	def __init__(self):
-		pass
+		self.is_running = False
 
 	def setup(self):
 		pass
