@@ -1,6 +1,7 @@
 import pygame #type: ignore
 from gamefiles.settings import *
 from gamefiles.player import *
+from gamefiles.level import *
 pygame.init()
 
 
@@ -9,6 +10,8 @@ clock = pygame.time.Clock()
 
 #Temporary player object for testing
 player = player(100, 200)
+#Temporary pos from map for testing
+level = level()
 
 is_game_running = True
 while is_game_running:
@@ -20,7 +23,9 @@ while is_game_running:
 	player.move()
 
 	screen.fill((30,30,30))
-	player.draw(screen)
+	level.draw_level(screen)
+	player.draw_player(screen)
+	
 
 
 	pygame.display.flip()

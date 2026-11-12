@@ -29,7 +29,7 @@ class player():
             self.velocity = 0
             self.one_ground = True 
     
-    def draw(self,screen):
+    def draw_player(self,screen):
         pygame.draw.rect(screen,(255,0,0),self.rect)
         
     
