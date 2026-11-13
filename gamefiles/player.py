@@ -11,7 +11,7 @@ class player():
         self.one_ground = False  
         
 
-    def move(self,):
+    def move(self,GROUND):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_a]:
             self.rect.x -= 5 
@@ -24,8 +24,8 @@ class player():
         self.rect.y += self.velocity
 
 
-        if self.rect.bottom >= 550:
-            self.rect.bottom = 550
+        if self.rect.bottom >= GROUND:
+            self.rect.bottom = GROUND
             self.velocity = 0
             self.one_ground = True 
     
