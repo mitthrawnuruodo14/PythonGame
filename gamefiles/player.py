@@ -10,18 +10,22 @@ class player():
         
         
 
-    def move(self,map):
+    def move(self,entities, map):
         old_x , old_y = map.rect.x , map.rect.y
         keys = pygame.key.get_pressed()
         if keys[pygame.K_d]:
-            map.rect.x -= 5 
+            for entity in entities:
+                entity.x -= 5 
         if keys[pygame.K_a]:
-            map.rect.x += 5
+            for entity in entities:
+                entity.x += 5 
         if keys[pygame.K_w]:
-            map.rect.y += 5
+            for entity in entities:
+                entity.y += 5 
         if keys[pygame.K_s]:
-            map.rect.y -= 5
-        if map.rect.contains(self.rect) == False:
+            for entity in entities:
+                entity.y -= 5 
+        if not map.rect.contains(self.rect):
             map.rect.x, map.rect.y = old_x,old_y
 
 

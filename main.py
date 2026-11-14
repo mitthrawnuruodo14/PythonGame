@@ -15,6 +15,8 @@ player = player(0,0,screen) #type: ignore
 #Temporary pos from map for testing
 level = level(screen) #type: ignore
 
+entities = [level.rect] 
+
 is_game_running = True
 while is_game_running:
 	for event in pygame.event.get():
@@ -22,7 +24,7 @@ while is_game_running:
 			is_game_running = False
 	print("Game is running...")
 	#Testing the player class and its movements this is temporary and will be moved later
-	player.move(level) #type:ignore
+	player.move(entities, level) #type:ignore
 
 	screen.fill((30,30,30))
 	#drawing the level and the player
