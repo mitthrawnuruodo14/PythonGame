@@ -9,10 +9,11 @@ screen = pygame.display.set_mode(RESOLUTION) #type:ignore
 clock = pygame.time.Clock()
 
 #Temporary player object for testing
-player = player(100, 200) #type: ignore
+player = player(0,0,screen) #type: ignore
+
 
 #Temporary pos from map for testing
-level = level() #type: ignore
+level = level(screen) #type: ignore
 
 is_game_running = True
 while is_game_running:
@@ -21,7 +22,7 @@ while is_game_running:
 			is_game_running = False
 	print("Game is running...")
 	#Testing the player class and its movements this is temporary and will be moved later
-	player.move(GROUND) #type:ignore
+	player.move(level) #type:ignore
 
 	screen.fill((30,30,30))
 	#drawing the level and the player

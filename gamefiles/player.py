@@ -3,31 +3,27 @@ from gamefiles.settings import * #type: ignore
 
 #Working on the playre class and Testing it in the main.py file
 class player():
-    def __init__(self,x,y):
-        self.x = x
-        self.y = y
-        self.rect = pygame.Rect(self.x,self.y,50,100)
-        self.velocity = 0
-        self.on_ground = False  
+    def __init__(self,x,y,screen):
+        self.x ,self.y= x,y
+        self.rect = pygame.Rect(self.x,self.y,100,100)
+        self.rect.center = screen.get_rect() .center       
+        
         
 
-    def move(self,GROUND):
+    def move(self,map):
+        old_x , old_y = map.rect.x , map.rect.y
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_a]:
-            self.rect.x -= 5 
         if keys[pygame.K_d]:
-            self.rect.x += 5
-        if keys[pygame.K_SPACE] and self.on_ground:
-            self.velocity = -JUMP_HEIGHT #type: ignore
-            self.on_ground = False
-        self.velocity += GRAVITY #type: ignore
-        self.rect.y += self.velocity
+            map.rect.x -= 5 
+        if keys[pygame.K_a]:
+            map.rect.x += 5
+        if keys[pygame.K_w]:
+            map.rect.y += 5
+        if keys[pygame.K_s]:
+            map.rect.y -= 5
+        if map.rect.contains(self.rect) == False:
+            map.rect.x, map.rect.y = old_x,old_y
 
-
-        if self.rect.bottom >= GROUND:
-            self.rect.bottom = GROUND
-            self.velocity = 0
-            self.on_ground = True 
 
     def uncollide(self, rect):
         if not self.rect.colliderect(rect):
