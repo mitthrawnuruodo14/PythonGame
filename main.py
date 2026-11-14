@@ -11,11 +11,14 @@ clock = pygame.time.Clock()
 #Temporary player object for testing
 player = player(0,0,screen) #type: ignore
 
+walls = [] 
 
 #Temporary pos from map for testing
-level = level(screen) #type: ignore
+level = level(screen, walls) #type: ignore
 
-entities = [level.rect] 
+entities = [level.rect]
+for wall in walls:
+	entities.append(wall)
 
 is_game_running = True
 while is_game_running:
@@ -24,14 +27,15 @@ while is_game_running:
 			is_game_running = False
 	print("Game is running...")
 	#Testing the player class and its movements this is temporary and will be moved later
-	player.move(entities, level) #type:ignore
+	player.move(entities) #type:ignore
 
 	screen.fill((30,30,30))
 	#drawing the level and the player
 	level.draw_level(screen)
 	player.draw_player(screen)
 	
-
+	for wall in walls:
+		player.uncollide(wall)
 
 	pygame.display.flip()
 	clock.tick(60)

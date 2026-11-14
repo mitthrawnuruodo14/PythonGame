@@ -10,8 +10,7 @@ class player():
         
         
 
-    def move(self,entities, map):
-        old_x , old_y = map.rect.x , map.rect.y
+    def move(self,entities, walls):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_d]:
             for entity in entities:
@@ -25,9 +24,6 @@ class player():
         if keys[pygame.K_s]:
             for entity in entities:
                 entity.y -= 5 
-        if not map.rect.contains(self.rect):
-            map.rect.x, map.rect.y = old_x,old_y
-
 
     def uncollide(self, rect):
         if not self.rect.colliderect(rect):
