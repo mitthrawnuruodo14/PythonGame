@@ -1,59 +1,24 @@
 import pygame #type: ignore
 from gamefiles.settings import * #type: ignore
+from .entity import Entity
 
 #Working on the playre class and Testing it in the main.py file
-class player():
-    def __init__(self,x,y,screen):
-        self.x ,self.y= x,y
-        self.rect = pygame.Rect(self.x,self.y,100,100)
-        self.rect.center = screen.get_rect() .center       
+class player(Entity):
+    def __init__(self,x,y):
+        super().__init__(
+            rect=pygame.Rect(x, y, 100, 100),
+            color=(255, 255, 255),
+            has_collision=True,
+            is_visible=True
+        )
         
-        
-
-    def move(self,entities, walls):
+    def move(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_d]:
-            for entity in entities:
-                entity.x -= 5 
+            self.rect.centerx -= 5
         if keys[pygame.K_a]:
-            for entity in entities:
-                entity.x += 5 
+            self.rect.centerx += 5
         if keys[pygame.K_w]:
-            for entity in entities:
-                entity.y += 5 
+            self.rect.centery += 5
         if keys[pygame.K_s]:
-            for entity in entities:
-                entity.y -= 5 
-
-    def uncollide(self, rect):
-        if not self.rect.colliderect(rect):
-            return
-
-        overlap_left = self.rect.right - rect.left
-        overlap_right = rect.right - self.rect.left
-        overlap_top = self.rect.bottom - rect.top
-        overlap_bottom = rect.bottom - self.rect.top
-
-        min_overlap = min(
-            overlap_left,
-            overlap_right,
-            overlap_top,
-            overlap_bottom
-        )
-
-        if min_overlap == overlap_left:
-            self.rect.right = rect.left
-
-        elif min_overlap == overlap_right:
-            self.rect.left = rect.right
-
-        elif min_overlap == overlap_top:
-            self.rect.bottom = rect.top
-
-        else:
-            self.rect.top = rect.bottom
-    
-    def draw_player(self,screen):
-        pygame.draw.rect(screen,(255,0,0),self.rect)
-        
-    
+            self.rect.centery -= 5
