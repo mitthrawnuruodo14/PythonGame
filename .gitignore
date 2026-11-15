@@ -1,3 +1,9 @@
 # virtual enviroment, reproducible and machine-specific
 .venv/
+<<<<<<< HEAD
 __pycache__/
+=======
+.DS_Store
+__pycache__/
+*.py[cod]
+>>>>>>> feature/settings-and-player
