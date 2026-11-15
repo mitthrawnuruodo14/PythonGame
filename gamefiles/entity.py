@@ -1,3 +1,4 @@
+from __future__ import annotations
 import pygame
 
 class Entity:
@@ -7,7 +8,7 @@ class Entity:
 		self.has_collision = has_collision
 		self.is_visible = is_visible
 
-	def uncollide(self, entity):
+	def uncollide(self, entity: Entity):
 		if not self.rect.colliderect(entity.rect):
 			return
 
@@ -35,6 +36,6 @@ class Entity:
 		else:
 			self.rect.top = entity.rect.bottom
 
-	def draw_screen(self, screen):
+	def draw_screen(self, screen: pygame.Surface):
 		if self.is_visible:
 			pygame.draw.rect(screen, self.color, self.rect)

@@ -1,10 +1,10 @@
 import pygame #type: ignore
 from gamefiles.settings import * #type: ignore
-from .entity import Entity
+from gamefiles.entity import Entity
 
 #Working on the playre class and Testing it in the main.py file
 class player(Entity):
-    def __init__(self,x,y):
+    def __init__(self, x: int, y: int):
         super().__init__(
             rect=pygame.Rect(x, y, 100, 100),
             color=(255, 255, 255),

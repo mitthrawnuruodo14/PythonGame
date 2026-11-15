@@ -1,8 +1,8 @@
-from .entity import Entity
-from pygame import Surface
+from gamefiles.entity import Entity
+import pygame
 
 class Camera():
-    def __init__(self, screen: Surface):
+    def __init__(self, screen: pygame.Surface):
         self.offset_x = 0
         self.offset_y = 0
         self.screen = screen
