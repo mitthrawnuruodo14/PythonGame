@@ -15,10 +15,10 @@ class player(Entity):
     def move(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_d]:
-            self.rect.centerx -= 5
-        if keys[pygame.K_a]:
             self.rect.centerx += 5
+        if keys[pygame.K_a]:
+            self.rect.centerx -= 5
         if keys[pygame.K_w]:
-            self.rect.centery += 5
-        if keys[pygame.K_s]:
             self.rect.centery -= 5
+        if keys[pygame.K_s]:
+            self.rect.centery += 5

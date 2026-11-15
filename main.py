@@ -75,7 +75,7 @@ while is_game_running:
 	#drawing the level and the player
 	for entity in entities:
 		camera.apply(entity).draw_screen(screen)
-	player.draw_screen(screen)
+	camera.apply(player).draw_screen(screen)
 
 	pygame.display.flip()
 	clock.tick(60)
