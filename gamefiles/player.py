@@ -12,13 +12,14 @@ class player(Entity):
             is_visible=True
         )
         
-    def move(self):
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_d]:
+    def move(self,inputs:list[int]):
+        if  1 in inputs :
             self.rect.centerx += 5
-        if keys[pygame.K_a]:
+        if 2 in inputs :
             self.rect.centerx -= 5
-        if keys[pygame.K_w]:
+        if 3 in inputs:
             self.rect.centery -= 5
-        if keys[pygame.K_s]:
+        if 4 in inputs:
             self.rect.centery += 5
+        else:
+            pass

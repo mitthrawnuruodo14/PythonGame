@@ -2,6 +2,8 @@ import pygame #type: ignore
 from gamefiles.settings import * #type: ignore
 from gamefiles.player import * #type: ignore
 from gamefiles.camera import Camera
+from gamefiles.menu import *
+from gamefiles.controlls import get_inputs
 
 def create_rect_box(entity: Entity, entities: list, thickness: int):
     entities.append(Entity(
@@ -55,6 +57,9 @@ camera = Camera(screen)
 
 entities = []
 
+game_state = "in_level"
+inputs: list = []
+
 build_level(screen, entities)
 
 is_game_running = True
@@ -63,19 +68,25 @@ while is_game_running:
 		if event.type == pygame.QUIT:
 			is_game_running = False
 	print("Game is running...")
-	player.move() #type:ignore
+	get_inputs(inputs)
+	if game_state == "menu":
+		pass
 
-	for entity in entities:
-		if entity.has_collision:
-			player.uncollide(entity)
+	elif game_state == "in_level":
+		player.move(inputs) #type:ignore
+		inputs.clear()
 
-	camera.update(player)
+		for entity in entities:
+			if entity.has_collision:
+				player.uncollide(entity)
 
-	screen.fill((30,30,30))
-	#drawing the level and the player
-	for entity in entities:
-		camera.apply(entity).draw_screen(screen)
-	camera.apply(player).draw_screen(screen)
+		camera.update(player)
+
+		screen.fill((30,30,30))
+		#drawing the level and the player
+		for entity in entities:
+			camera.apply(entity).draw_screen(screen)
+		camera.apply(player).draw_screen(screen)
 
 	pygame.display.flip()
 	clock.tick(60)
