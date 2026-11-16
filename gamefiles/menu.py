@@ -1,6 +1,8 @@
 import pygame 
 from gamefiles.settings import *
 from gamefiles.controls import *
+from gamefiles.game import GameState
+
 def menu(game_state,inputs,screen):
     
     text_color_1 = WHITE
@@ -18,10 +20,10 @@ def menu(game_state,inputs,screen):
         button_color = WHITE
         text_color_1 = RED
     
-    if menu_button_1.collidepoint(mouse_pos)and 30 in inputs :
-        print("Die Maus ist im Rechteck und die linke maustaste wird gedrückt")
+    if menu_button_1.collidepoint(mouse_pos) and Input.MOUSE_LEFT in inputs:
         button_color = RED
         text_color_1 = WHITE
+        game_state[0] = GameState.IN_LEVEL
 
     text_surface = FONT_36.render("Start",True,(text_color_1))
     text_rect = text_surface.get_rect(center= menu_button_1.center)

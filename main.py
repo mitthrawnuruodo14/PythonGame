@@ -32,7 +32,9 @@ while is_game_running:
 	get_inputs(inputs)
 	
 	if game_state == GameState.MENU:
-		menu(game_state,inputs,screen)
+		game_state_container = [GameState.MENU]
+		menu(game_state_container, inputs, screen)
+		game_state = game_state_container[0]
 
 	elif game_state == GameState.IN_LEVEL:
 		player.move(inputs) #type:ignore
