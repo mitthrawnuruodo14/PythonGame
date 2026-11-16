@@ -11,7 +11,9 @@ class Input(IntEnum):
     MOUSE_RIGHT = 40
     MOUSE_POS_IDX = 0
 
-def get_inputs(inputs):
+def get_inputs(inputs: list):
+    inputs.clear()
+
     keys = pygame.key.get_pressed()
     mouse = pygame.mouse.get_pressed()
     mouse_pos = pygame.mouse.get_pos()

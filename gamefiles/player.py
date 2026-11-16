@@ -13,10 +13,10 @@ class player(Entity):
             is_visible=True
         )
         
-    def move(self,inputs:list[int]):
-        if Input.D in inputs :
+    def move(self, inputs: list):
+        if Input.D in inputs:
             self.rect.centerx += 5
-        if Input.A in inputs :
+        if Input.A in inputs:
             self.rect.centerx -= 5
         if Input.W in inputs:
             self.rect.centery -= 5

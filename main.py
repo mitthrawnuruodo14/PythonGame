@@ -4,60 +4,21 @@ from gamefiles.player import * #type: ignore
 from gamefiles.camera import Camera
 from gamefiles.menu import *
 from gamefiles.controls import *
-
-def create_rect_box(entity: Entity, entities: list, thickness: int):
-    entities.append(Entity(
-    	rect=pygame.Rect(entity.rect.left, entity.rect.top - thickness, entity.rect.width, thickness),
-		color=(0, 0, 0),
-		is_visible=False,
-		has_collision=True,
-    ))
-
-    entities.append(Entity(
-    	rect=pygame.Rect(entity.rect.left, entity.rect.bottom, entity.rect.width, thickness),
-    	color = (0, 0, 0),
-    	is_visible=False,
-    	has_collision=True
-
-	))
-
-    entities.append(Entity(
-		rect=pygame.Rect(entity.rect.left - thickness, entity.rect.top, thickness, entity.rect.height),
-		color=(0, 0, 0),
-		is_visible=False,
-		has_collision=True,
-    ))
-
-
-    entities.append(Entity(
-    	rect=pygame.Rect(entity.rect.right, entity.rect.top, thickness, entity.rect.height),
-		color = (0, 0, 0),
-		is_visible=False,
-		has_collision=True,
-    ))
-
-def build_level(screen: pygame.Surface, entities: list):
-		background = Entity(
-			rect=pygame.Rect(-500,-500,1000,1000),
-			color=(0, 0, 255),
-			has_collision=False,
-			is_visible=True,
-		)
-		entities.append(background)
-		create_rect_box(background, entities, 50)
+from gamefiles.level import *
+from gamefiles.game import GameState
 
 pygame.init()
 
 screen = pygame.display.set_mode(RESOLUTION) #type:ignore
 clock = pygame.time.Clock()
 
-player = player(0,0) #type: ignore
+player = player(0, 0) #type: ignore
 
 camera = Camera(screen)
 
 entities = []
 
-game_state = "menu"
+game_state = GameState.MENU
 inputs: list = []
 
 build_level(screen, entities)
@@ -70,14 +31,11 @@ while is_game_running:
 	print("Game is running...")
 	get_inputs(inputs)
 	
-	if game_state == "menu":
+	if game_state == GameState.MENU:
 		menu(game_state,inputs,screen)
-		inputs.clear()
-		pass
 
-	elif game_state == "in_level":
+	elif game_state == GameState.IN_LEVEL:
 		player.move(inputs) #type:ignore
-		inputs.clear()
 
 		for entity in entities:
 			if entity.has_collision:

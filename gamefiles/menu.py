@@ -17,8 +17,6 @@ def menu(game_state,inputs,screen):
     if menu_button_1.collidepoint(mouse_pos):
         button_color = WHITE
         text_color_1 = RED
-
-        
     
     if menu_button_1.collidepoint(mouse_pos)and 30 in inputs :
         print("Die Maus ist im Rechteck und die linke maustaste wird gedrückt")
@@ -30,6 +28,5 @@ def menu(game_state,inputs,screen):
 
     pygame.draw.rect(screen,button_color,menu_button_1)
     screen.blit(text_surface,text_rect)
-        
 
     return menu_button_1
