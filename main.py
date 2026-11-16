@@ -3,7 +3,7 @@ from gamefiles.settings import * #type: ignore
 from gamefiles.player import * #type: ignore
 from gamefiles.camera import Camera
 from gamefiles.menu import *
-from gamefiles.controlls import get_inputs
+from gamefiles.controls import *
 
 def create_rect_box(entity: Entity, entities: list, thickness: int):
     entities.append(Entity(

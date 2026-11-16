@@ -1,10 +1,12 @@
 import pygame 
 from gamefiles.settings import *
+from gamefiles.controls import *
 def menu(game_state,inputs,screen):
     
     text_color_1 = WHITE
     
-    mouse_pos = inputs[0]
+    mouse_pos = inputs[Input.MOUSE_POS_IDX]
+
     screen.fill((0,0,0))
     menu_button_1 = pygame.Rect(10,10,200,100)
     menu_button_1.center = screen.get_rect().center
