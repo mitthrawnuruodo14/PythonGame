@@ -57,7 +57,7 @@ camera = Camera(screen)
 
 entities = []
 
-game_state = "in_level"
+game_state = "menu"
 inputs: list = []
 
 build_level(screen, entities)
@@ -69,7 +69,10 @@ while is_game_running:
 			is_game_running = False
 	print("Game is running...")
 	get_inputs(inputs)
+	
 	if game_state == "menu":
+		menu(game_state,inputs,screen)
+		inputs.clear()
 		pass
 
 	elif game_state == "in_level":
@@ -87,7 +90,7 @@ while is_game_running:
 		for entity in entities:
 			camera.apply(entity).draw_screen(screen)
 		camera.apply(player).draw_screen(screen)
-
+	
 	pygame.display.flip()
 	clock.tick(60)
 
