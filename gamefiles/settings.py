@@ -1,4 +1,18 @@
+import pygame
+
+pygame.font.init()
+
+#Generic
 RESOLUTION = WIDTH, HEIGHT = 800, 600
-JUMP_HEIGHT = 15
-GRAVITY = 1
-GROUND = 500 
+
+#text 
+FONT_36 = pygame.font.SysFont(None, 36)
+#End text
+
+#Colors
+RED = (255,0,0)
+GREEN = (0,255,0)
+BLACK = (0,0,0)
+WHITE = (255,255,255)
+GREY = (30,30,30)
+#End Colors

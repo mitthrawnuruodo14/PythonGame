@@ -1,6 +1,7 @@
 import pygame #type: ignore
 from gamefiles.settings import * #type: ignore
 from gamefiles.entity import Entity
+from gamefiles.controls import *
 
 #Working on the playre class and Testing it in the main.py file
 class player(Entity):
@@ -12,13 +13,12 @@ class player(Entity):
             is_visible=True
         )
         
-    def move(self):
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_d]:
+    def move(self, inputs: list):
+        if Input.D in inputs:
             self.rect.centerx += 5
-        if keys[pygame.K_a]:
+        if Input.A in inputs:
             self.rect.centerx -= 5
-        if keys[pygame.K_w]:
+        if Input.W in inputs:
             self.rect.centery -= 5
-        if keys[pygame.K_s]:
+        if Input.S in inputs:
             self.rect.centery += 5
