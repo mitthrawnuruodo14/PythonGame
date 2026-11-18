@@ -26,6 +26,8 @@ inputs: list = []
 
 build_level(screen, world.entities)
 
+world.update_draw_order()
+
 is_game_running = True
 while is_game_running:
 	for event in pygame.event.get():
@@ -38,7 +40,6 @@ while is_game_running:
 	if game_state == GameState.MENU:
 		game_state = menu.update(game_state,inputs)
 		menu.draw(screen) 
-		pass
 
 	elif game_state == GameState.IN_LEVEL:
 		world.player.move(inputs) #type:ignore
@@ -47,7 +48,7 @@ while is_game_running:
 			if entity.has_collision:
 				world.player.uncollide(entity)
 
-		world.update_entities()
+		world.update_entities(inputs)
 
 		camera.update(world.player)
 

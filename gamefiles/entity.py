@@ -2,11 +2,12 @@ from __future__ import annotations
 import pygame
 
 class Entity:
-	def __init__(self, rect: pygame.Rect, color: tuple, has_collision: bool, is_visible: bool):
+	def __init__(self, rect: pygame.Rect, color: tuple, has_collision: bool, is_visible: bool, z_index: int):
 		self.rect = rect
 		self.color = color
 		self.has_collision = has_collision
 		self.is_visible = is_visible
+		self.z_index = z_index
 
 	def uncollide(self, entity: Entity):
 		if not self.rect.colliderect(entity.rect):
@@ -40,5 +41,5 @@ class Entity:
 		if self.is_visible:
 			pygame.draw.rect(screen, self.color, self.rect)
 
-	def update(self, world):
+	def update(self, world, inputs):
 		pass

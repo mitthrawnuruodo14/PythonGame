@@ -7,14 +7,15 @@ def create_rect_box(entity: Entity, entities: list, thickness: int):
 		color=(0, 0, 0),
 		is_visible=False,
 		has_collision=True,
+		z_index=0,
     ))
 
     entities.append(Entity(
     	rect=pygame.Rect(entity.rect.left, entity.rect.bottom, entity.rect.width, thickness),
     	color = (0, 0, 0),
     	is_visible=False,
-    	has_collision=True
-
+    	has_collision=True,
+		z_index=0,
 	))
 
     entities.append(Entity(
@@ -22,6 +23,7 @@ def create_rect_box(entity: Entity, entities: list, thickness: int):
 		color=(0, 0, 0),
 		is_visible=False,
 		has_collision=True,
+		z_index=0,
     ))
 
 
@@ -30,6 +32,7 @@ def create_rect_box(entity: Entity, entities: list, thickness: int):
 		color = (0, 0, 0),
 		is_visible=False,
 		has_collision=True,
+		z_index=0,
     ))
 
 def build_level(screen: pygame.Surface, entities: list):
@@ -37,7 +40,8 @@ def build_level(screen: pygame.Surface, entities: list):
 			rect=pygame.Rect(-50,-500,1000,1000),
 			color=(0, 0, 255),
 			has_collision=False,
-			is_visible=False,
+			is_visible=True,
+			z_index=-1,
 		)
 		entities.append(background)
 		create_rect_box(background, entities, 50)

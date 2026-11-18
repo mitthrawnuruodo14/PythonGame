@@ -11,7 +11,7 @@ class Menu():
         pass
 
     def update(self, game_state,inputs):
-        start_button_out = self.start_button.update(inputs)
+        start_button_out = self.start_button.update_ui(inputs)
         if start_button_out == 1:
             game_state =GameState.IN_LEVEL
         return game_state

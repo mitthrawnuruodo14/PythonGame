@@ -9,12 +9,11 @@ class Button(Entity):
             rect=pygame.Rect(x,y,width,height),
             color= RED,
             has_collision = False,
-            is_visible = True
+            is_visible = True,
+            z_index=0
         )
-        pass
-        
 
-    def update(self,inputs):
+    def update_ui(self, inputs):
         mouse_pos = inputs[Input.MOUSE_POS_IDX]
         if self.rect.collidepoint(mouse_pos):
             self.color = GREEN

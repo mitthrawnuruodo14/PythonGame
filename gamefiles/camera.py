@@ -17,4 +17,5 @@ class Camera():
             has_collision=entity.has_collision,
             is_visible=entity.is_visible,
             color=entity.color,
+            z_index=entity.z_index,
         )

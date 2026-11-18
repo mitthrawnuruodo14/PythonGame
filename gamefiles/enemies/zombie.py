@@ -10,14 +10,15 @@ class Zombie(Enemy):
 				rect=pygame.Rect(x, y, 100, 100),
 				color=(255, 255, 255),
 				has_collision=False,
-				is_visible=True
+				is_visible=True,
+				z_index=0,
 			), 
 			health=100,
 			damage=100,
 			speed=2
 		)
 
-	def update(self, world):
+	def update(self, world, inputs):
 		direction = pygame.Vector2(
 			world.player.rect.center
 		) - pygame.Vector2(self.rect.center)

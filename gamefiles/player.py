@@ -9,7 +9,8 @@ class Player(Entity):
             rect=pygame.Rect(x, y, 60, 60),
             color=(255, 255, 255),
             has_collision=True,
-            is_visible=True
+            is_visible=True,
+            z_index=0,
         )
         
     def move(self, inputs: list):
