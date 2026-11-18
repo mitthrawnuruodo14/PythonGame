@@ -1,3 +1,4 @@
+import pygame
 from gamefiles.entity import *
 from gamefiles.enemy import *
 from gamefiles.player import *
@@ -13,8 +14,16 @@ class Zombie(Enemy):
 			), 
 			health=100,
 			damage=100,
-			speed=100
+			speed=2
 		)
 
 	def update(self, world):
-		self.rect.centerx += 1
+		direction = pygame.Vector2(
+			world.player.rect.center
+		) - pygame.Vector2(self.rect.center)
+
+		if direction.length() != 0:
+			direction = direction.normalize()
+
+		self.rect.centerx += round(direction.x * self.speed)
+		self.rect.centery += round(direction.y * self.speed)
