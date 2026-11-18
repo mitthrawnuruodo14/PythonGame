@@ -2,33 +2,23 @@ import pygame
 from gamefiles.settings import *
 from gamefiles.controls import *
 from gamefiles.game import GameState
+from gamefiles.ui import *
 
-def menu(game_state,inputs,screen):
-    
-    text_color_1 = WHITE
-    
-    mouse_pos = inputs[Input.MOUSE_POS_IDX]
+class Menu():
+    def __init__(self,screen):
+        #hier wird der button einmalig erstellt
+        self.start_button = Button(30,30,200,80)
+        pass
 
-    screen.fill((0,0,0))
-    menu_button_1 = pygame.Rect(10,10,200,100)
-    menu_button_1.center = screen.get_rect().center
-    menu_button_1.y = menu_button_1.y + 180
+    def update(self, game_state,inputs):
+        start_button_out = self.start_button.update(inputs)
+        if start_button_out == 1:
+            game_state =GameState.IN_LEVEL
+        return game_state
+        
+    def draw(self,screen):
+        screen.fill((0,0,100))
+        self.start_button.draw_screen(screen)
+        #zeichnet die buttons und sprites
+        #hier wird der Button und das sprite gezeichnet
     
-    button_color = GREY
-    
-    if menu_button_1.collidepoint(mouse_pos):
-        button_color = WHITE
-        text_color_1 = RED
-    
-    if menu_button_1.collidepoint(mouse_pos) and Input.MOUSE_LEFT in inputs:
-        button_color = RED
-        text_color_1 = WHITE
-        game_state[0] = GameState.IN_LEVEL
-
-    text_surface = FONT_36.render("Start",True,(text_color_1))
-    text_rect = text_surface.get_rect(center= menu_button_1.center)
-
-    pygame.draw.rect(screen,button_color,menu_button_1)
-    screen.blit(text_surface,text_rect)
-
-    return menu_button_1

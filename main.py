@@ -7,7 +7,7 @@ from gamefiles.controls import *
 from gamefiles.level import *
 from gamefiles.game import GameState
 
-screen = pygame.display.set_mode(RESOLUTION) #type:ignore
+screen = pygame.display.set_mode(RESOLUTION,pygame.SCALED | pygame.FULLSCREEN) #type:ignore
 clock = pygame.time.Clock()
 
 player = player(0, 0) #type: ignore
@@ -15,6 +15,8 @@ player = player(0, 0) #type: ignore
 camera = Camera(screen)
 
 entities = []
+
+menu = Menu(screen)
 
 game_state = GameState.MENU
 inputs: list = []
@@ -29,10 +31,11 @@ while is_game_running:
 	print("Game is running...")
 	get_inputs(inputs)
 	
+	
 	if game_state == GameState.MENU:
-		game_state_container = [GameState.MENU]
-		menu(game_state_container, inputs, screen)
-		game_state = game_state_container[0]
+		game_state = menu.update(game_state,inputs)
+		menu.draw(screen) 
+		pass
 
 	elif game_state == GameState.IN_LEVEL:
 		player.move(inputs) #type:ignore
