@@ -15,3 +15,6 @@ class Zombie(Enemy):
 			damage=100,
 			speed=100
 		)
+
+	def update(self, world):
+		self.rect.centerx += 1

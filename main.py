@@ -17,6 +17,8 @@ camera = Camera(screen)
 
 world = World(Player(0, 0))
 
+world.entities.append(Zombie(50, 50))
+
 game_state = GameState.MENU
 inputs: list = []
 
@@ -41,6 +43,8 @@ while is_game_running:
 		for entity in world.entities:
 			if entity.has_collision:
 				world.player.uncollide(entity)
+
+		world.update_entities()
 
 		camera.update(world.player)
 

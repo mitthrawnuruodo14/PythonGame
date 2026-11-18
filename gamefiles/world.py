@@ -10,3 +10,7 @@ class World():
 		for entity in self.entities:
 			camera.apply(entity).draw_screen(screen)
 		camera.apply(self.player).draw_screen(screen)
+	
+	def update_entities(self):
+		for entity in self.entities:
+			entity.update(self)
