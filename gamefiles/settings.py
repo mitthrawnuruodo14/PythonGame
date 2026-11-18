@@ -3,7 +3,7 @@ import pygame
 pygame.font.init()
 
 #Generic
-RESOLUTION = WIDTH, HEIGHT = 800, 600
+RESOLUTION = WIDTH, HEIGHT = 1280, 720
 
 #text 
 FONT_36 = pygame.font.SysFont(None, 36)
