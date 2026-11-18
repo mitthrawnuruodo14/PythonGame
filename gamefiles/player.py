@@ -3,8 +3,7 @@ from gamefiles.settings import * #type: ignore
 from gamefiles.entity import Entity
 from gamefiles.controls import *
 
-#Working on the playre class and Testing it in the main.py file
-class player(Entity):
+class Player(Entity):
     def __init__(self, x: int, y: int):
         super().__init__(
             rect=pygame.Rect(x, y, 60, 60),

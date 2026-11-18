@@ -1,4 +1,5 @@
 import pygame #type: ignore
+from gamefiles.world import World
 from gamefiles.settings import * #type: ignore
 from gamefiles.player import * #type: ignore
 from gamefiles.camera import Camera
@@ -6,22 +7,24 @@ from gamefiles.menu import *
 from gamefiles.controls import *
 from gamefiles.level import *
 from gamefiles.game import GameState
+from gamefiles.enemy import Enemy
+from gamefiles.enemies.zombie import Zombie
 
 screen = pygame.display.set_mode(RESOLUTION,pygame.SCALED | pygame.FULLSCREEN) #type:ignore
 clock = pygame.time.Clock()
 
-player = player(0, 0) #type: ignore
-
 camera = Camera(screen)
 
-entities = []
+world = World(Player(0, 0))
+
+world.entities.append(Zombie(50, 50))
 
 menu = Menu(screen)
 
 game_state = GameState.MENU
 inputs: list = []
 
-build_level(screen, entities)
+build_level(screen, world.entities)
 
 is_game_running = True
 while is_game_running:
@@ -38,19 +41,19 @@ while is_game_running:
 		pass
 
 	elif game_state == GameState.IN_LEVEL:
-		player.move(inputs) #type:ignore
+		world.player.move(inputs) #type:ignore
 
-		for entity in entities:
+		for entity in world.entities:
 			if entity.has_collision:
-				player.uncollide(entity)
+				world.player.uncollide(entity)
 
-		camera.update(player)
+		world.update_entities()
+
+		camera.update(world.player)
 
 		screen.fill((30,30,30))
-		#drawing the level and the player
-		for entity in entities:
-			camera.apply(entity).draw_screen(screen)
-		camera.apply(player).draw_screen(screen)
+
+		world.draw_screen(camera, screen)
 	
 	pygame.display.flip()
 	clock.tick(60)

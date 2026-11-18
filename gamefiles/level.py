@@ -37,7 +37,7 @@ def build_level(screen: pygame.Surface, entities: list):
 			rect=pygame.Rect(-50,-500,1000,1000),
 			color=(0, 0, 255),
 			has_collision=False,
-			is_visible=True,
+			is_visible=False,
 		)
 		entities.append(background)
 		create_rect_box(background, entities, 50)
