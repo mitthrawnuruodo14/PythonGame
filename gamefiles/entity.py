@@ -39,3 +39,6 @@ class Entity:
 	def draw_screen(self, screen: pygame.Surface):
 		if self.is_visible:
 			pygame.draw.rect(screen, self.color, self.rect)
+
+	def update(self, world):
+		pass
