@@ -6,7 +6,8 @@ from gamefiles.controls import *
 class Player(Entity):
     def __init__(self, x: int, y: int):
         super().__init__(
-            rect=pygame.Rect(x, y, 60, 60),
+            pos=pygame.Vector2(x, y),
+            size=(60, 60),
             color=(255, 255, 255),
             has_collision=True,
             is_visible=True,
@@ -15,10 +16,10 @@ class Player(Entity):
         
     def move(self, inputs: list):
         if Input.D in inputs:
-            self.rect.centerx += 3
+            self.pos.x += 3
         if Input.A in inputs:
-            self.rect.centerx -= 3
+            self.pos.x -= 3
         if Input.W in inputs:
-            self.rect.centery -= 3
+            self.pos.y -= 3
         if Input.S in inputs:
-            self.rect.centery += 3
+            self.pos.y += 3

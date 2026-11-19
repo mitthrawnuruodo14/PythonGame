@@ -5,7 +5,7 @@ from gamefiles.world import World
 
 class Enemy(Entity):
 	def __init__(self, entity: Entity, health: int, damage: int, speed: int):
-		super().__init__(entity.rect, entity.color, entity.has_collision, entity.is_visible, entity.z_index)
+		super().__init__(entity.pos, (entity.width, entity.height), entity.color, entity.has_collision, entity.is_visible, entity.z_index)
 		self.health = health
 		self.damage = damage
 		self.speed = speed

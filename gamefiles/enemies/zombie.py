@@ -7,7 +7,8 @@ class Zombie(Enemy):
 	def __init__(self, x: int, y: int):
 		super().__init__(
 			entity=Entity(
-				rect=pygame.Rect(x, y, 100, 100),
+				pos=pygame.Vector2(x, y),
+				size=(100, 100),
 				color=(255, 255, 255),
 				has_collision=False,
 				is_visible=True,
@@ -19,12 +20,22 @@ class Zombie(Enemy):
 		)
 
 	def update(self, world, inputs):
-		direction = pygame.Vector2(
-			world.player.rect.center
-		) - pygame.Vector2(self.rect.center)
+		player_center = world.player.pos + pygame.Vector2(
+			world.player.width / 2,
+			world.player.height / 2
+		)
 
-		if direction.length() != 0:
-			direction = direction.normalize()
+		self_center = self.pos + pygame.Vector2(
+			self.width / 2,
+			self.height / 2
+		)
 
-		self.rect.centerx += round(direction.x * self.speed)
-		self.rect.centery += round(direction.y * self.speed)
+		self_center = self_center.move_towards(
+			player_center,
+			self.speed
+		)
+
+		self.pos = self_center - pygame.Vector2(
+			self.width / 2,
+			self.height / 2
+		)

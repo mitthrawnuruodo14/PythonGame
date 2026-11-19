@@ -6,7 +6,8 @@ from gamefiles.controls import *
 class Button(Entity):
     def __init__(self,x,y,width,height):
         super().__init__(
-            rect=pygame.Rect(x,y,width,height),
+            pos=pygame.Vector2(x, y),
+            size=(width, height),
             color= RED,
             has_collision = False,
             is_visible = True,
@@ -15,7 +16,7 @@ class Button(Entity):
 
     def update_ui(self, inputs):
         mouse_pos = inputs[Input.MOUSE_POS_IDX]
-        if self.rect.collidepoint(mouse_pos):
+        if self.get_rect().collidepoint(mouse_pos):
             self.color = GREEN
             if Input.MOUSE_LEFT in inputs:
                 self.color = WHITE
