@@ -16,10 +16,10 @@ class Zombie(Enemy):
 			), 
 			health=100,
 			damage=100,
-			speed=2
+			speed=75
 		)
 
-	def update(self, world, inputs):
+	def update(self, world, inputs, delta_time):
 		player_center = world.player.pos + pygame.Vector2(
 			world.player.width / 2,
 			world.player.height / 2
@@ -32,7 +32,7 @@ class Zombie(Enemy):
 
 		self_center = self_center.move_towards(
 			player_center,
-			self.speed
+			self.speed * delta_time
 		)
 
 		self.pos = self_center - pygame.Vector2(

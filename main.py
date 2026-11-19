@@ -30,10 +30,12 @@ world.update_draw_order()
 
 is_game_running = True
 while is_game_running:
+	delta_time = clock.tick(60) / 1000.0
+
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
 			is_game_running = False
-	print("Game is running...")
+	print(f"deltatime: {delta_time}")
 	get_inputs(inputs)
 	
 	
@@ -42,13 +44,11 @@ while is_game_running:
 		menu.draw(screen) 
 
 	elif game_state == GameState.IN_LEVEL:
-		world.player.move(inputs) #type:ignore
+		world.update_entities(inputs, delta_time)
 
 		for entity in world.entities:
 			if entity.has_collision:
 				world.player.uncollide(entity)
-
-		world.update_entities(inputs)
 
 		camera.update(world.player)
 
@@ -57,6 +57,5 @@ while is_game_running:
 		world.draw_screen(camera, screen)
 	
 	pygame.display.flip()
-	clock.tick(60)
 
 pygame.quit()

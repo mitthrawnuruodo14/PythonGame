@@ -14,12 +14,12 @@ class Player(Entity):
             z_index=0,
         )
         
-    def move(self, inputs: list):
+    def update(self, world, inputs: list, delta_time):
         if Input.D in inputs:
-            self.pos.x += 3
+            self.pos.x += 100 * delta_time
         if Input.A in inputs:
-            self.pos.x -= 3
+            self.pos.x -= 100 * delta_time
         if Input.W in inputs:
-            self.pos.y -= 3
+            self.pos.y -= 100 * delta_time
         if Input.S in inputs:
-            self.pos.y += 3
+            self.pos.y += 100 * delta_time
