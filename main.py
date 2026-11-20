@@ -30,14 +30,13 @@ world.update_draw_order()
 
 is_game_running = True
 while is_game_running:
-	delta_time = clock.tick(60) / 1000.0
+	delta_time = clock.tick(120) / 1000.0
 
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
 			is_game_running = False
-	print(f"deltatime: {delta_time}")
+
 	get_inputs(inputs)
-	
 	
 	if game_state == GameState.MENU:
 		game_state = menu.update(game_state,inputs)

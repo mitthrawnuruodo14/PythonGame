@@ -16,10 +16,15 @@ class Zombie(Enemy):
 			), 
 			health=100,
 			damage=100,
-			speed=75
+			speed=75,
 		)
+		self.cooldown=3.0
+		self.active_cooldown = 0.0
 
 	def update(self, world, inputs, delta_time):
+		self.active_cooldown -= delta_time
+		self.active_cooldown = pygame.math.clamp(self.active_cooldown, 0.0, self.cooldown)
+
 		player_center = world.player.pos + pygame.Vector2(
 			world.player.width / 2,
 			world.player.height / 2
@@ -39,3 +44,7 @@ class Zombie(Enemy):
 			self.width / 2,
 			self.height / 2
 		)
+	
+		if self.get_rect().colliderect(world.player.get_rect()) and self.active_cooldown == 0.0:
+			world.player.get_hit(self.damage)
+			self.active_cooldown = self.cooldown
