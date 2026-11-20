@@ -53,10 +53,12 @@ class Zombie(Enemy):
 		)
 	
 		if self.get_rect().colliderect(world.player.get_rect()) and self.active_cooldown == 0.0:
-			world.player.get_hit(self.damage)
+			world.player.get_hit(self.damage, world)
 			self.active_cooldown = self.cooldown
 	
-	def get_hit(self, damage: int):
+	def get_hit(self, damage: int, world):
 		self.health -= damage
-		print(self.health)
 		self.active_hit_indicator_duration = self.hit_indicator_duration
+
+		if self.health <= 0.0:
+			world.entities.remove(self)

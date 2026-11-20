@@ -49,10 +49,10 @@ class Player(Humanoid):
                 angle = math.atan2(direction.y, direction.x)
                 
                 bullet_pos = pygame.Vector2(self.pos.x + self.width/2, self.pos.y + self.height/2)
-                world.entities.append(Bullet(self, bullet_pos, (10, 10), angle, 1200, 10, 10))
+                world.entities.append(Bullet(self, bullet_pos, (10, 10), angle, 1200, 20, 1))
 
                 self.active_shoot_cooldown = self.shoot_cooldown
 
-    def get_hit(self, damage: int):
+    def get_hit(self, damage: int, world):
         self.health -= damage
         self.active_hit_indicator_duration = self.hit_indicator_duration

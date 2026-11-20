@@ -24,7 +24,7 @@ class Bullet(Entity):
 		for	entity in world.entities:
 			if isinstance(entity, Humanoid) and entity != self.parent and not entity in self.entities_hit:
 				if self.get_rect().colliderect(entity.get_rect()):
-					entity.get_hit(self.damage)
+					entity.get_hit(self.damage, world)
 					self.entities_hit.append(entity)
 
 					self.penetrate_count -= 1

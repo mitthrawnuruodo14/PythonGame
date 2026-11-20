@@ -1,4 +1,5 @@
 from gamefiles.entity import Entity
+from gamefiles.world import World
 
 class Humanoid(Entity):
 	def __init__(self, entity, health, speed):
@@ -6,5 +7,5 @@ class Humanoid(Entity):
 		self.health = health
 		self.speed = speed
 
-	def get_hit(self, damage: int):
+	def get_hit(self, damage: int, world: World):
 		pass
