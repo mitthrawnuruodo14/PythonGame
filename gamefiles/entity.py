@@ -49,5 +49,5 @@ class Entity:
 		if self.is_visible:
 			pygame.draw.rect(screen, self.color, self.get_rect())
 
-	def update(self, world, inputs, delta_time):
+	def update(self, world, screen, inputs, delta_time):
 		pass

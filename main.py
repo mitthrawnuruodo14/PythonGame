@@ -43,7 +43,7 @@ while is_game_running:
 		menu.draw(screen) 
 
 	elif game_state == GameState.IN_LEVEL:
-		world.update_entities(inputs, delta_time)
+		world.update_entities(screen, inputs, delta_time)
 
 		for entity in world.entities:
 			if entity.has_collision:

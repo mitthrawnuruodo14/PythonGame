@@ -8,7 +8,7 @@ class Zombie(Enemy):
 		super().__init__(
 			entity=Entity(
 				pos=pygame.Vector2(x, y),
-				size=(100, 100),
+				size=(60, 60),
 				color=(255, 255, 255),
 				has_collision=False,
 				is_visible=True,
@@ -21,7 +21,7 @@ class Zombie(Enemy):
 		self.cooldown=3.0
 		self.active_cooldown = 0.0
 
-	def update(self, world, inputs, delta_time):
+	def update(self, world, screen, inputs, delta_time):
 		self.active_cooldown -= delta_time
 		self.active_cooldown = pygame.math.clamp(self.active_cooldown, 0.0, self.cooldown)
 
