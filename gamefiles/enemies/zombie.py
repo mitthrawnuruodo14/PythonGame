@@ -15,14 +15,21 @@ class Zombie(Enemy):
 				z_index=0,
 			), 
 			health=100,
-			damage=100,
+			damage=20,
 			speed=75,
 		)
 		self.cooldown=3.0
 		self.active_cooldown = 0.0
+		self.hit_indicator_duration = 0.125
+		self.active_hit_indicator_duration = 0.0
 
 	def update(self, world, screen, inputs, delta_time):
+		self.color = RED if self.active_hit_indicator_duration > 0.0 else WHITE
+
 		self.active_cooldown -= delta_time
+		self.active_hit_indicator_duration -= delta_time
+
+		self.active_hit_indicator_duration = pygame.math.clamp(self.active_hit_indicator_duration, 0.0, self.hit_indicator_duration)
 		self.active_cooldown = pygame.math.clamp(self.active_cooldown, 0.0, self.cooldown)
 
 		player_center = world.player.pos + pygame.Vector2(
@@ -48,3 +55,8 @@ class Zombie(Enemy):
 		if self.get_rect().colliderect(world.player.get_rect()) and self.active_cooldown == 0.0:
 			world.player.get_hit(self.damage)
 			self.active_cooldown = self.cooldown
+	
+	def get_hit(self, damage: int):
+		self.health -= damage
+		print(self.health)
+		self.active_hit_indicator_duration = self.hit_indicator_duration

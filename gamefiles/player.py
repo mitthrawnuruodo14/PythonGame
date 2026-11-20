@@ -4,16 +4,21 @@ from gamefiles.settings import * #type: ignore
 from gamefiles.entity import Entity
 from gamefiles.controls import *
 from gamefiles.bullet import Bullet
+from gamefiles.humanoid import Humanoid
 
-class Player(Entity):
+class Player(Humanoid):
     def __init__(self, x: int, y: int):
         super().__init__(
-            pos=pygame.Vector2(x, y),
-            size=(60, 60),
-            color=(255, 255, 255),
-            has_collision=True,
-            is_visible=True,
-            z_index=0,
+            entity=Entity(
+                pos=pygame.Vector2(x, y),
+                size=(60, 60),
+                color=(255, 255, 255),
+                has_collision=True,
+                is_visible=True,
+                z_index=0,
+            ),
+            health=100,
+            speed=200
         )
         self.health = 100
         self.hit_indicator_duration = 0.125
@@ -42,10 +47,9 @@ class Player(Entity):
                 mouse_pos = pygame.Vector2(inputs[Input.MOUSE_POS_IDX])
                 direction = mouse_pos - pygame.Vector2(screen.get_rect().width/2, screen.get_rect().height/2)
                 angle = math.atan2(direction.y, direction.x)
-                print(direction)
                 
                 bullet_pos = pygame.Vector2(self.pos.x + self.width/2, self.pos.y + self.height/2)
-                world.entities.append(Bullet(self, bullet_pos, (10, 10), angle, 1200))
+                world.entities.append(Bullet(self, bullet_pos, (10, 10), angle, 1200, 10))
 
                 self.active_shoot_cooldown = self.shoot_cooldown
 

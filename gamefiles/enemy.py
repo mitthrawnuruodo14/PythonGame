@@ -1,11 +1,11 @@
-import pygame
 from gamefiles.entity import Entity
-from gamefiles.player import Player
-from gamefiles.world import World
+from gamefiles.humanoid import Humanoid
 
-class Enemy(Entity):
-	def __init__(self, entity: Entity, health: int, damage: int, speed: int):
-		super().__init__(entity.pos, (entity.width, entity.height), entity.color, entity.has_collision, entity.is_visible, entity.z_index)
-		self.health = health
+class Enemy(Humanoid):
+	def __init__(self, entity, health, damage, speed):
+		super().__init__(
+			entity=Entity(entity.pos, (entity.width, entity.height), entity.color, entity.has_collision, entity.is_visible, entity.z_index), 
+			health=health,
+			speed=speed
+		)
 		self.damage = damage
-		self.speed = speed
