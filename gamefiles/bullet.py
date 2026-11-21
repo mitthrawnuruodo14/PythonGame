@@ -21,23 +21,25 @@ class Bullet(Entity):
 		self.entities_hit = []
 
 	def update(self, world, screen, inputs, delta_time):
-		if self.get_rect().colliderect(world.player.get_rect()) and self.parent != world.player:
-			world.player.get_hit(self.damage, world)
-			self.entities_hit.append(world.player)
+		if self.parent != world.player:
+			if self.get_rect().colliderect(world.player.get_rect()):
+				world.player.get_hit(self.damage, world)
+				self.entities_hit.append(world.player)
 
-			self.penetrate_count -= 1
-			if self.penetrate_count == 0:
-				world.entities.remove(self)
+				self.penetrate_count -= 1
+				if self.penetrate_count == 0:
+					world.entities.remove(self)
 
-		for	entity in world.entities:
-			if isinstance(entity, Humanoid) and entity != self.parent and not entity in self.entities_hit:
-				if self.get_rect().colliderect(entity.get_rect()):
-					entity.get_hit(self.damage, world)
-					self.entities_hit.append(entity)
+		if self.parent == world.player:
+			for	entity in world.entities:
+				if isinstance(entity, Humanoid) and entity != self.parent and not entity in self.entities_hit:
+					if self.get_rect().colliderect(entity.get_rect()):
+						entity.get_hit(self.damage, world)
+						self.entities_hit.append(entity)
 
-					self.penetrate_count -= 1
-					if self.penetrate_count == 0:
-						world.entities.remove(self)
+						self.penetrate_count -= 1
+						if self.penetrate_count == 0:
+							world.entities.remove(self)
 
 		movement = pygame.Vector2(
         	math.cos(self.orientation),
