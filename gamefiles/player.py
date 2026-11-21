@@ -32,7 +32,7 @@ class Player(Humanoid):
         self.active_hit_indicator_duration -= delta_time
         self.active_shoot_cooldown -= delta_time
         self.active_hit_indicator_duration = pygame.math.clamp(self.active_hit_indicator_duration, 0.0, self.hit_indicator_duration)
-        self.active_shoot_cooldown = pygame.math.clamp(self.active_shoot_cooldown, 0.0, self.hit_indicator_duration)
+        self.active_shoot_cooldown = pygame.math.clamp(self.active_shoot_cooldown, 0.0, self.shoot_cooldown)
 
         if Input.D in inputs:
             self.pos.x += 200 * delta_time
