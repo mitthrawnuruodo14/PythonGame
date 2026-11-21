@@ -9,6 +9,7 @@ from gamefiles.level import *
 from gamefiles.game import GameState
 from gamefiles.enemy import Enemy
 from gamefiles.enemies.zombie import Zombie
+from gamefiles.enemies.skeleton import Skeleton
 
 screen = pygame.display.set_mode(RESOLUTION,pygame.SCALED | pygame.FULLSCREEN) #type:ignore
 clock = pygame.time.Clock()
@@ -17,7 +18,8 @@ camera = Camera(screen)
 
 world = World(Player(0, 0))
 
-world.entities.append(Zombie(50, 50))
+world.entities.append(Zombie(500, 500))
+world.entities.append(Skeleton(700, 250))
 
 menu = Menu(screen)
 

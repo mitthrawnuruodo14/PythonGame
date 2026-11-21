@@ -53,6 +53,8 @@ class Player(Humanoid):
 
                 self.active_shoot_cooldown = self.shoot_cooldown
 
+        print(f"health: {self.health}")
+
     def get_hit(self, damage: int, world):
         self.health -= damage
         self.active_hit_indicator_duration = self.hit_indicator_duration
