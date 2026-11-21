@@ -5,12 +5,12 @@ from gamefiles.enemy import *
 from gamefiles.player import *
 
 class Skeleton(Enemy):
-	def __init__(self, x: int, y: int):
+	def __init__(self, x: float, y: float):
 		super().__init__(
 			entity=Entity(
 				pos=pygame.Vector2(x, y),
 				size=(60, 60),
-				color=(200, 200, 200),
+				color=(100, 100, 100),
 				has_collision=False,
 				is_visible=True,
 				z_index=0,

@@ -7,7 +7,7 @@ from gamefiles.bullet import Bullet
 from gamefiles.humanoid import Humanoid
 
 class Player(Humanoid):
-    def __init__(self, x: int, y: int):
+    def __init__(self, x: float, y: float):
         super().__init__(
             entity=Entity(
                 pos=pygame.Vector2(x, y),
@@ -52,8 +52,6 @@ class Player(Humanoid):
                 world.entities.append(Bullet(self, bullet_pos, (10, 10), angle, 1200, 20, 1))
 
                 self.active_shoot_cooldown = self.shoot_cooldown
-
-        print(f"health: {self.health}")
 
     def get_hit(self, damage: int, world):
         self.health -= damage

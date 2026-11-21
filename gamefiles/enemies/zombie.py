@@ -4,7 +4,7 @@ from gamefiles.enemy import *
 from gamefiles.player import *
 
 class Zombie(Enemy):
-	def __init__(self, x: int, y: int):
+	def __init__(self, x: float, y: float):
 		super().__init__(
 			entity=Entity(
 				pos=pygame.Vector2(x, y),

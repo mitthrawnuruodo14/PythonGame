@@ -10,6 +10,7 @@ from gamefiles.game import GameState
 from gamefiles.enemy import Enemy
 from gamefiles.enemies.zombie import Zombie
 from gamefiles.enemies.skeleton import Skeleton
+from gamefiles.enemies.splitter import Splitter
 
 screen = pygame.display.set_mode(RESOLUTION,pygame.SCALED | pygame.FULLSCREEN) #type:ignore
 clock = pygame.time.Clock()
@@ -20,6 +21,7 @@ world = World(Player(0, 0))
 
 world.entities.append(Zombie(500, 500))
 world.entities.append(Skeleton(700, 250))
+world.entities.append(Splitter(700, 500, 200, 5, 20))
 
 menu = Menu(screen)
 
