@@ -22,7 +22,7 @@ class Bullet(Entity):
 
 	def update(self, world, screen, inputs, delta_time):
 		if self.parent != world.player:
-			if self.get_rect().colliderect(world.player.get_rect()):
+			if self.get_rect().colliderect(world.player.get_rect()) and not world.player in self.entities_hit:
 				world.player.get_hit(self.damage, world)
 				self.entities_hit.append(world.player)
 
