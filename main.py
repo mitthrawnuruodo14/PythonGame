@@ -26,13 +26,15 @@ world.entities.append(Skeleton(700, 250))
 world.entities.append(Splitter(700, 500, 200, 5, 20))
 world.entities.append(Rammer(700, -200))
 
+
+
 menu = Menu(screen)
 
 game_state = GameState.MENU
 inputs: list = []
 
-saved_list = read_leaderboard()
-print(saved_list)
+
+
 
 build_level(screen, world.entities)
 
