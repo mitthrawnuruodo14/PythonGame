@@ -11,12 +11,14 @@ class Menu():
   
         self.start_button = Button(30,30,200,80,"Start",35)
         self.end_button = Button(30,600,200,80,"Beenden",30)
+        self.hintergrund_leaderboard = Button(790,90,420,560,None,None)
+        self.hintergrund_leaderboard.color = (30,30,30)
 
         leaderboard = read_leaderboard()
         self.leaderboard_buttons = []
         leaderboard_y = 100
         player_number = 1
-        for punkte,name in leaderboard:
+        for punkte,name in leaderboard[:10]:
             text = f"{player_number}. {name} - {punkte}"
             btn = Button(800,leaderboard_y,400,45,text,22)
             btn.start_y = leaderboard_y  
@@ -34,8 +36,8 @@ class Menu():
                 btn.color = GREEN
                 btn.width = 420
                 btn.pos.x = 790
-                btn.height = 50
-                btn.pos.y = btn.start_y  -2.5
+                btn.height = 52.5
+                btn.pos.y = btn.start_y  -5
 
             else:
                 btn.color = RED
@@ -68,6 +70,7 @@ class Menu():
         screen.fill((0,0,100))
         self.start_button.draw_screen(screen)
         self.end_button.draw_screen(screen)
+        self.hintergrund_leaderboard.draw_screen(screen)
         for btn in self.leaderboard_buttons:   
             btn.draw_screen(screen) 
        

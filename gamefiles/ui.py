@@ -4,9 +4,9 @@ from gamefiles.entity import *
 from gamefiles.controls import *
 
 class Button(Entity):
-    def __init__(self,x,y,width,height,text="",text_size =30,text_color=WHITE):
+    def __init__(self,x,y,width,height,text=None,text_size =30,text_color=WHITE):
         text_surf = None
-        if text != "":
+        if text != None:
              font =pygame.font.SysFont("Arial",text_size)
              text_surf = font.render(text,True,text_color)
         self.base_width = width
