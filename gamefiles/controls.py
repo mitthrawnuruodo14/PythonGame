@@ -7,6 +7,7 @@ class Input(IntEnum):
     W = 3
     S = 4
     BACKSPACE = 5
+    SPACE = 6
     MOUSE_LEFT = 30
     MOUSE_RIGHT = 40
     MOUSE_POS_IDX = 0
@@ -27,6 +28,8 @@ def get_inputs(inputs: list):
         inputs.append(Input.D)
     if keys[pygame.K_a]:
         inputs.append(Input.A)
+    if keys[pygame.K_SPACE]:
+        inputs.append(Input.SPACE)
     if keys[pygame.K_BACKSPACE]:
         inputs.append(Input.BACKSPACE)
     if mouse[0]:

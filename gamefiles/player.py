@@ -22,26 +22,54 @@ class Player(Humanoid):
         )
         self.health = 100
         self.hit_indicator_duration = 0.125
-        self.active_hit_indicator_duration = 0.0
+        self.active_hit_indicator_duration = 0
         self.shoot_cooldown = 0.3
-        self.active_shoot_cooldown = 0.0
+        self.active_shoot_cooldown = 0
+        self.dash_cooldown = 4
+        self.active_dash_cooldown = 0
+        self.dash_speed = 800
+        self.remaining_dash_distance = 0
+        self.dash_distance = 400
+        self.direction = pygame.Vector2(0, 0)
+        self.move_state = "normal"
         
     def update(self, world, screen, inputs: list, delta_time):
         self.color = RED if self.active_hit_indicator_duration > 0.0 else WHITE
 
         self.active_hit_indicator_duration -= delta_time
         self.active_shoot_cooldown -= delta_time
+        self.active_dash_cooldown -= delta_time
         self.active_hit_indicator_duration = pygame.math.clamp(self.active_hit_indicator_duration, 0.0, self.hit_indicator_duration)
         self.active_shoot_cooldown = pygame.math.clamp(self.active_shoot_cooldown, 0.0, self.shoot_cooldown)
+        self.active_dash_cooldown = pygame.math.clamp(self.active_dash_cooldown, 0.0, self.dash_cooldown)
 
-        if Input.D in inputs:
-            self.pos.x += 200 * delta_time
-        if Input.A in inputs:
-            self.pos.x -= 200 * delta_time
-        if Input.W in inputs:
-            self.pos.y -= 200 * delta_time
-        if Input.S in inputs:
-            self.pos.y += 200 * delta_time
+        if self.move_state == "normal":
+            self.direction = pygame.Vector2(0, 0)
+            if Input.D in inputs:
+                self.pos.x += 200 * delta_time
+                self.direction.x += 1
+            if Input.A in inputs:
+                self.pos.x -= 200 * delta_time
+                self.direction.x -= 1
+            if Input.W in inputs:
+                self.pos.y -= 200 * delta_time
+                self.direction.y -= 1
+            if Input.S in inputs:
+                self.pos.y += 200 * delta_time
+                self.direction.y += 1
+            if Input.SPACE in inputs:
+                if self.active_dash_cooldown == 0.0 and self.direction != pygame.Vector2(0, 0):
+                    self.move_state = "dashing"
+                    self.remaining_dash_distance = self.dash_distance
+                    self.active_dash_cooldown = self.dash_cooldown
+        else:
+            self.pos += self.direction * self.dash_speed * delta_time
+    
+            self.remaining_dash_distance -= self.dash_speed * delta_time
+
+            if self.remaining_dash_distance <= 0:
+                self.move_state = "normal"
+
         if Input.MOUSE_LEFT in inputs:
             if self.active_shoot_cooldown == 0.0:
                 mouse_pos = pygame.Vector2(inputs[Input.MOUSE_POS_IDX])
