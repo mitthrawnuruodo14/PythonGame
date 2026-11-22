@@ -66,7 +66,12 @@ while is_game_running:
 		time_passed += delta_time
 
 		if time_passed - last_spawned_enemy_timestamp > get_spawn_interval(time_passed):
-			world.entities.append(copy(random.choice(enemies)))
+			enemy = copy(random.choice(enemies))
+			enemy_pos = world.player.pos
+			while (enemy_pos - world.player.pos).length() < 800:
+				enemy_pos = pygame.Vector2(random.randint(-710, 700), random.randint(-710, 700))
+			enemy.pos = enemy_pos
+			world.entities.append(enemy)
 			last_spawned_enemy_timestamp = time_passed
 
 		world.update_entities(screen, inputs, delta_time)
