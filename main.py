@@ -12,6 +12,7 @@ from gamefiles.enemies.zombie import Zombie
 from gamefiles.enemies.skeleton import Skeleton
 from gamefiles.enemies.splitter import Splitter
 from gamefiles.enemies.rammer import Rammer
+from gamefiles.leaderboard import *
 
 screen = pygame.display.set_mode(RESOLUTION,pygame.SCALED | pygame.FULLSCREEN) #type:ignore
 clock = pygame.time.Clock()
@@ -29,6 +30,9 @@ menu = Menu(screen)
 
 game_state = GameState.MENU
 inputs: list = []
+
+saved_list = read_leaderboard()
+print(saved_list)
 
 build_level(screen, world.entities)
 
