@@ -9,7 +9,7 @@ class Zombie(Enemy):
 		super().__init__(
 			entity=Entity(
 				pos=pygame.Vector2(x, y),
-				size=(60, 60),
+				size=(40, 40),
 				color=self.default_color,
 				has_collision=False,
 				is_visible=True,
@@ -17,10 +17,10 @@ class Zombie(Enemy):
 			), 
 			health=100,
 			damage=20,
-			speed=100,
+			speed=70,
 		)
 		self.cooldown=1.5
-		self.active_cooldown = 0.0
+		self.active_cooldown = self.cooldown
 		self.hit_indicator_duration = 0.125
 		self.active_hit_indicator_duration = 0.0
 

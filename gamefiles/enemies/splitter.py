@@ -9,7 +9,7 @@ class Splitter(Enemy):
 		super().__init__(
 			entity=Entity(
 				pos=pygame.Vector2(x, y),
-				size=((level**1.5)*25, (level**1.5)*25),
+				size=((level**1.5)*20, (level**1.5)*20),
 				color=self.default_color,
 				has_collision=False,
 				is_visible=True,
@@ -21,7 +21,7 @@ class Splitter(Enemy):
 		)
 		self.level = level
 		self.cooldown=1.5
-		self.active_cooldown = 0.0
+		self.active_cooldown = self.cooldown
 		self.hit_indicator_duration = 0.125
 		self.active_hit_indicator_duration = 0.0
 		self.original_health = health

@@ -41,9 +41,9 @@ world.update_draw_order()
 
 enemies = [
 	Zombie(50, 50),
-	Skeleton(700, 700),
+	Skeleton(700, 500),
 	Splitter(-50, -400, 100, 3, 40),
-	Rammer(800, 200)
+	Rammer(600, 200)
 ]
 
 last_spawned_enemy_timestamp = 0
@@ -73,6 +73,9 @@ while is_game_running:
 
 		for entity in world.entities:
 			if entity.has_collision:
+				for _entity in world.entities:
+					if entity.has_collision and _entity != entity and isinstance(_entity, Humanoid):
+						_entity.uncollide(entity)
 				world.player.uncollide(entity)
 
 		camera.update(world.player)

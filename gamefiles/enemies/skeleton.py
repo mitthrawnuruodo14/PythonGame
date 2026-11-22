@@ -10,7 +10,7 @@ class Skeleton(Enemy):
 		super().__init__(
 			entity=Entity(
 				pos=pygame.Vector2(x, y),
-				size=(60, 60),
+				size=(40, 40),
 				color=self.default_color,
 				has_collision=False,
 				is_visible=True,
@@ -18,15 +18,15 @@ class Skeleton(Enemy):
 			), 
 			health=60,
 			damage=20,
-			speed=75,
+			speed=55,
 		)
 		self.cooldown=2.25
-		self.active_cooldown = 0.0
+		self.active_cooldown = self.cooldown
 		self.hit_indicator_duration = 0.125
 		self.active_hit_indicator_duration = 0.0
 
 	def update(self, world, screen, inputs, delta_time):
-		SKELETON_MAX_DISTANCE = 400
+		SKELETON_MAX_DISTANCE = 300
 
 		self.color = RED if self.active_hit_indicator_duration > 0.0 else self.default_color
 

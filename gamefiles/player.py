@@ -11,14 +11,14 @@ class Player(Humanoid):
         super().__init__(
             entity=Entity(
                 pos=pygame.Vector2(x, y),
-                size=(60, 60),
+                size=(40, 40),
                 color=(255, 255, 255),
                 has_collision=True,
                 is_visible=True,
                 z_index=0,
             ),
             health=100,
-            speed=200
+            speed=150
         )
         self.health = 100
         self.hit_indicator_duration = 0.125
