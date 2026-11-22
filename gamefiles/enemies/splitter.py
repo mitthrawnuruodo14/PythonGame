@@ -5,11 +5,12 @@ from gamefiles.player import *
 
 class Splitter(Enemy):
 	def __init__(self, x: float, y: float, health, level, speed):
+		self.default_color = (0, 0, 255)
 		super().__init__(
 			entity=Entity(
 				pos=pygame.Vector2(x, y),
 				size=((level**1.5)*25, (level**1.5)*25),
-				color=(255, 255, 255),
+				color=self.default_color,
 				has_collision=False,
 				is_visible=True,
 				z_index=0,
@@ -26,7 +27,7 @@ class Splitter(Enemy):
 		self.original_health = health
 
 	def update(self, world, screen, inputs, delta_time):
-		self.color = RED if self.active_hit_indicator_duration > 0.0 else WHITE
+		self.color = RED if self.active_hit_indicator_duration > 0.0 else self.default_color
 
 		self.active_cooldown -= delta_time
 		self.active_hit_indicator_duration -= delta_time

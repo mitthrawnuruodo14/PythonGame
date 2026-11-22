@@ -1,4 +1,6 @@
 import math
+import random
+from copy import copy
 import pygame #type: ignore
 from gamefiles.world import World
 from gamefiles.settings import * #type: ignore
@@ -37,6 +39,13 @@ build_level(screen, world.entities)
 
 world.update_draw_order()
 
+enemies = [
+	Zombie(50, 50),
+	Skeleton(700, 700),
+	Splitter(-50, -400, 100, 3, 40),
+	Rammer(800, 200)
+]
+
 last_spawned_enemy_timestamp = 0
 time_passed = 0
 is_game_running = True
@@ -55,11 +64,9 @@ while is_game_running:
 
 	elif game_state == GameState.IN_LEVEL:
 		time_passed += delta_time
-		spawn_interval = get_spawn_interval(time_passed)
-		print(spawn_interval)
 
-		if time_passed - last_spawned_enemy_timestamp > spawn_interval:
-			world.entities.append(Zombie(50, 50))
+		if time_passed - last_spawned_enemy_timestamp > get_spawn_interval(time_passed):
+			world.entities.append(copy(random.choice(enemies)))
 			last_spawned_enemy_timestamp = time_passed
 
 		world.update_entities(screen, inputs, delta_time)

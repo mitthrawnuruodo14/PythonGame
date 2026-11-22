@@ -42,7 +42,7 @@ def build_level(screen: pygame.Surface, entities: list):
 		background = Entity(
 			pos=pygame.Vector2(-50, -500),
 			size=(1000, 1000),
-			color=(0, 0, 255),
+			color=(100, 100, 100),
 			has_collision=False,
 			is_visible=True,
 			z_index=-1,

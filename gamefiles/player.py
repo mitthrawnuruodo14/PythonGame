@@ -80,6 +80,8 @@ class Player(Humanoid):
                 world.entities.append(Bullet(self, bullet_pos, (10, 10), angle, 1200, 20, 1))
 
                 self.active_shoot_cooldown = self.shoot_cooldown
+        if self.health <= 0.0:
+             exit()
 
     def get_hit(self, damage: int, world):
         self.health -= damage
