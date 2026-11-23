@@ -17,7 +17,7 @@ class Zombie(Enemy):
 			), 
 			health=100,
 			damage=20,
-			speed=70,
+			speed=120,
 		)
 		self.cooldown=1.5
 		self.active_cooldown = self.cooldown

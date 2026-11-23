@@ -47,3 +47,6 @@ class Bullet(Entity):
     	) * self.speed
 
 		self.pos += movement * delta_time
+
+		if (self.pos - world.player.pos).length() >= 2000:
+			world.entities.remove(self)

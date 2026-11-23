@@ -20,7 +20,8 @@ class Player(Humanoid):
             health=100,
             speed=150
         )
-        self.health = 100
+        self.max_health = 100
+        self.health = self.max_health
         self.hit_indicator_duration = 0.125
         self.active_hit_indicator_duration = 0
         self.shoot_cooldown = 0.3
@@ -80,8 +81,6 @@ class Player(Humanoid):
                 world.entities.append(Bullet(self, bullet_pos, (10, 10), angle, 1200, 20, 1))
 
                 self.active_shoot_cooldown = self.shoot_cooldown
-        if self.health <= 0.0:
-             exit()
 
     def get_hit(self, damage: int, world):
         self.health -= damage

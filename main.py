@@ -36,9 +36,6 @@ menu = Menu(screen)
 game_state = GameState.MENU
 inputs: list = []
 
-
-
-
 build_level(screen, world.entities)
 
 world.update_draw_order()
@@ -68,6 +65,17 @@ while is_game_running:
 
 	elif game_state == GameState.IN_LEVEL:
 		time_passed += delta_time
+
+		if world.player.health <= 0:
+			world.entities = [
+    			entity for entity in world.entities
+    			if not isinstance(entity, Enemy)
+			]
+			world.player.health = world.player.max_health
+			world.player.pos = pygame.Vector2(0, 0)
+			time_passed = 0
+			last_spawned_enemy_timestamp = 0
+			game_state = GameState.MENU
 
 		if time_passed - last_spawned_enemy_timestamp > get_spawn_interval(time_passed):
 			enemy = copy(random.choice(enemies))
