@@ -2,7 +2,7 @@ from __future__ import annotations
 import pygame
 
 class Entity:
-	def __init__(self, pos: pygame.Vector2, size: tuple[int, int], color: tuple, has_collision: bool, is_visible: bool, z_index: int):
+	def __init__(self, pos: pygame.Vector2, size: tuple[int, int], color: tuple, has_collision: bool, is_visible: bool, z_index: int,surface=None):
 		self.pos = pos
 		self.width = size[0]
 		self.height = size[1]
@@ -10,6 +10,7 @@ class Entity:
 		self.has_collision = has_collision
 		self.is_visible = is_visible
 		self.z_index = z_index
+		self.surface = surface
 
 	def get_rect(self):
 		return pygame.Rect(round(self.pos.x), round(self.pos.y), self.width, self.height)
@@ -47,7 +48,11 @@ class Entity:
 
 	def draw_screen(self, screen: pygame.Surface):
 		if self.is_visible:
+			rect = self.get_rect()
 			pygame.draw.rect(screen, self.color, self.get_rect())
+			if self.surface != None:
+				surf_rect = self.surface.get_rect(center=rect.center)
+				screen.blit(self.surface,surf_rect)
 
 	def update(self, world, screen, inputs, delta_time):
 		pass

@@ -15,6 +15,7 @@ from gamefiles.enemies.zombie import Zombie
 from gamefiles.enemies.skeleton import Skeleton
 from gamefiles.enemies.splitter import Splitter
 from gamefiles.enemies.rammer import Rammer
+from gamefiles.leaderboard import *
 
 def get_spawn_interval(time_survived: float) -> float:
     initial_interval = 2.5
@@ -34,6 +35,9 @@ menu = Menu(screen)
 
 game_state = GameState.MENU
 inputs: list = []
+
+
+
 
 build_level(screen, world.entities)
 
