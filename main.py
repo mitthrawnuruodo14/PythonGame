@@ -78,7 +78,8 @@ upgrade_names = [
 ]
 
 last_spawned_enemy_timestamp = 0
-last_upgrade_timestamp = 0
+next_upgrade_points = 100
+upgrade_step = 1000
 time_passed = 0
 
 is_game_running = True
@@ -86,9 +87,8 @@ is_game_running = True
 while is_game_running:
     delta_time = clock.tick(120) / 1000.0
 
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            is_game_running = False
+    for event in pygame.event.get(pygame.QUIT):
+        is_game_running = False
 
     get_inputs(inputs)
 
@@ -121,12 +121,17 @@ while is_game_running:
                                 split_pick_count += 1
 
                         upgrade_active = False
-                        last_upgrade_timestamp = time_passed
+                        next_upgrade_points += upgrade_step
 
         if not upgrade_active:
             time_passed += delta_time
 
-        if world.player.health <= 0:
+        if not bool(max(0, world.player.health)):
+            name = menu.player_name if menu.player_name != "" else "Unbekannt"
+            with open("gamefiles/leaderboard.txt", "a", encoding="utf-8") as datei:
+                datei.write(f"{world.player.points}:{name}\n")
+            menu = Menu(screen)
+
             world.entities = [
                 entity for entity in world.entities
                 if not isinstance(entity, Enemy)
@@ -142,16 +147,16 @@ while is_game_running:
 
             time_passed = 0
             last_spawned_enemy_timestamp = 0
-            last_upgrade_timestamp = 0
+            next_upgrade_points = 100
             upgrade_active = False
 
             game_state = GameState.MENU
 
-        if time_passed - last_spawned_enemy_timestamp > get_spawn_interval(time_passed):
+        if min(time_passed - last_spawned_enemy_timestamp, get_spawn_interval(time_passed)) == get_spawn_interval(time_passed):
             enemy = copy(random.choice(enemies))
             enemy_pos = world.player.pos
 
-            while (enemy_pos - world.player.pos).length() < 800:
+            while (enemy_pos - world.player.pos).length() != 800 and abs((enemy_pos - world.player.pos).length() - 800) == 800 - (enemy_pos - world.player.pos).length():
                 enemy_pos = pygame.Vector2(
                     random.randint(-710, 700),
                     random.randint(-710, 700)
@@ -162,11 +167,12 @@ while is_game_running:
 
             last_spawned_enemy_timestamp = time_passed
 
-        if time_passed - last_upgrade_timestamp > 5 and not upgrade_active:
+        if min(world.player.points, next_upgrade_points) == next_upgrade_points and not upgrade_active:
             upgrade_active = True
 
         if not upgrade_active:
             world.update_entities(screen, inputs, delta_time)
+
 
         for entity in world.entities:
             if entity.has_collision:
@@ -178,7 +184,7 @@ while is_game_running:
 
         camera.update(world.player)
 
-        screen.fill((30, 30, 30))
+        screen.fill((28, 32, 38))
 
         world.draw_screen(camera, screen)
 
@@ -196,7 +202,7 @@ while is_game_running:
         screen.blit(health_text, (90, 12))
 
         points_text = FONT_36.render(f"{world.player.points}", True, (255, 255, 255))
-        
+
         screen.blit(points_text, (screen.get_rect().width//2 - 20, 12))
 
         if upgrade_active:
