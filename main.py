@@ -1,10 +1,11 @@
 import math
 import random
 from copy import copy
-import pygame #type: ignore
+import pygame  # type: ignore
+
 from gamefiles.world import World
-from gamefiles.settings import * #type: ignore
-from gamefiles.player import * #type: ignore
+from gamefiles.settings import *  # type: ignore
+from gamefiles.player import *  # type: ignore
 from gamefiles.camera import Camera
 from gamefiles.menu import *
 from gamefiles.controls import *
@@ -17,6 +18,7 @@ from gamefiles.enemies.splitter import Splitter
 from gamefiles.enemies.rammer import Rammer
 from gamefiles.leaderboard import *
 
+
 def get_spawn_interval(time_survived: float) -> float:
     initial_interval = 2.5
     min_interval = 0.4
@@ -24,93 +26,180 @@ def get_spawn_interval(time_survived: float) -> float:
 
     return min_interval + (initial_interval - min_interval) * math.exp(-growth_factor * time_survived)
 
-screen = pygame.display.set_mode(RESOLUTION,pygame.SCALED | pygame.FULLSCREEN) #type:ignore
+screen = pygame.display.set_mode(RESOLUTION, pygame.SCALED | pygame.FULLSCREEN)
 clock = pygame.time.Clock()
 
 camera = Camera(screen)
-
 world = World(Player(0, 0))
-
 menu = Menu(screen)
 
 game_state = GameState.MENU
 inputs: list = []
 
 build_level(screen, world.entities)
-
 world.update_draw_order()
 
 enemies = [
-	Zombie(50, 50),
-	Skeleton(700, 500),
-	Splitter(-50, -400, 100, 3, 40),
-	Rammer(600, 200)
+    Zombie(50, 50),
+    Skeleton(700, 500),
+    Splitter(-50, -400, 100, 3, 40),
+    Rammer(600, 200)
+]
+
+upgrade_active = False
+
+button_width = 220
+button_height = 100
+button_gap = 20
+
+total_width = button_width * 3 + button_gap * 2
+start_x = (screen.get_width() - total_width) // 2
+
+upgrade_buttons = [
+    pygame.Rect(
+        start_x + i * (button_width + button_gap),
+        50,
+        button_width,
+        button_height
+    )
+    for i in range(4)
+]
+
+pen_pick_required_count = 2
+pen_pick_count = 0
+upgrade_names = [
+    "More damage",
+    "Heal",
+    "Move speed",
+    "Penetration"
 ]
 
 last_spawned_enemy_timestamp = 0
+last_upgrade_timestamp = 0
 time_passed = 0
+
 is_game_running = True
+
 while is_game_running:
-	delta_time = clock.tick(120) / 1000.0
+    delta_time = clock.tick(120) / 1000.0
 
-	for event in pygame.event.get():
-		if event.type == pygame.QUIT:
-			is_game_running = False
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            is_game_running = False
 
-	get_inputs(inputs)
-	
-	if game_state == GameState.MENU:
-		game_state = menu.update(game_state,inputs)
-		menu.draw(screen) 
+    get_inputs(inputs)
 
-	elif game_state == GameState.IN_LEVEL:
-		time_passed += delta_time
+    if game_state == GameState.MENU:
+        game_state = menu.update(game_state, inputs)
+        menu.draw(screen)
 
-		if world.player.health <= 0:
-			world.entities = [
-    			entity for entity in world.entities
-    			if not isinstance(entity, Enemy)
-			]
-			world.player.health = world.player.max_health
-			world.player.pos = pygame.Vector2(0, 0)
-			time_passed = 0
-			last_spawned_enemy_timestamp = 0
-			game_state = GameState.MENU
+    elif game_state == GameState.IN_LEVEL:
+        if upgrade_active:
+            if Input.MOUSE_LEFT in inputs:
+                for i, button in enumerate(upgrade_buttons):
+                    if button.collidepoint(inputs[Input.MOUSE_POS_IDX]):
+                        if i == 0:
+                            world.player.damage += 10
+                        elif i == 1:
+                            world.player.health = world.player.max_health
+                        elif i == 2:
+                            world.player.speed += 50
+                        elif i == 3:
+                            if (pen_pick_count >= pen_pick_required_count - 1):
+                                world.player.penetration += 1
+                                pen_pick_count = 0
+                            else:
+                                pen_pick_count += 1
 
-		if time_passed - last_spawned_enemy_timestamp > get_spawn_interval(time_passed):
-			enemy = copy(random.choice(enemies))
-			enemy_pos = world.player.pos
-			while (enemy_pos - world.player.pos).length() < 800:
-				enemy_pos = pygame.Vector2(random.randint(-710, 700), random.randint(-710, 700))
-			enemy.pos = enemy_pos
-			world.entities.append(enemy)
-			last_spawned_enemy_timestamp = time_passed
+                        upgrade_active = False
+                        last_upgrade_timestamp = time_passed
 
-		world.update_entities(screen, inputs, delta_time)
+        if not upgrade_active:
+            time_passed += delta_time
 
-		for entity in world.entities:
-			if entity.has_collision:
-				for _entity in world.entities:
-					if entity.has_collision and _entity != entity and isinstance(_entity, Humanoid):
-						_entity.uncollide(entity)
-				world.player.uncollide(entity)
+        if world.player.health <= 0:
+            world.entities = [
+                entity for entity in world.entities
+                if not isinstance(entity, Enemy)
+            ]
 
-		camera.update(world.player)
+            world.player.health = world.player.max_health
+            world.player.speed = world.player.speed_base
+            world.player.damage = world.player.damage_base
+            world.player.penetration = world.player.penetration_base
+            world.player.pos = pygame.Vector2(0, 0)
 
-		screen.fill((30,30,30))
+            time_passed = 0
+            last_spawned_enemy_timestamp = 0
+            last_upgrade_timestamp = 0
+            upgrade_active = False
 
-		world.draw_screen(camera, screen)
+            game_state = GameState.MENU
 
-		health_bar_width = 250
-		health_bar_height = 25
-		pygame.draw.rect(screen, "red", pygame.Rect(12, 12, health_bar_width, health_bar_height))
+        if time_passed - last_spawned_enemy_timestamp > get_spawn_interval(time_passed):
+            enemy = copy(random.choice(enemies))
+            enemy_pos = world.player.pos
 
-		player_health_ratio = world.player.health/world.player.max_health
-		pygame.draw.rect(screen, "green", pygame.Rect(12, 12, health_bar_width*player_health_ratio, health_bar_height))
+            while (enemy_pos - world.player.pos).length() < 800:
+                enemy_pos = pygame.Vector2(
+                    random.randint(-710, 700),
+                    random.randint(-710, 700)
+                )
 
-		health_text = FONT_36.render(f"{world.player.health}/{world.player.max_health}", True, (255, 255, 255))
-		screen.blit(health_text, (90, 12))
-	
-	pygame.display.flip()
+            enemy.pos = enemy_pos
+            world.entities.append(enemy)
+
+            last_spawned_enemy_timestamp = time_passed
+
+        if time_passed - last_upgrade_timestamp > 5 and not upgrade_active:
+            upgrade_active = True
+
+        if not upgrade_active:
+            world.update_entities(screen, inputs, delta_time)
+
+        for entity in world.entities:
+            if entity.has_collision:
+                for _entity in world.entities:
+                    if entity.has_collision and _entity != entity and isinstance(_entity, Humanoid):
+                        _entity.uncollide(entity)
+
+                world.player.uncollide(entity)
+
+        camera.update(world.player)
+
+        screen.fill((30, 30, 30))
+
+        world.draw_screen(camera, screen)
+
+        health_bar_width = 250
+        health_bar_height = 25
+
+        pygame.draw.rect(screen, "red", pygame.Rect(12, 12, health_bar_width, health_bar_height))
+
+        player_health_ratio = world.player.health / world.player.max_health
+
+        pygame.draw.rect(screen, "green", pygame.Rect(12, 12, health_bar_width * player_health_ratio, health_bar_height))
+
+        health_text = FONT_36.render(f"{world.player.health}/{world.player.max_health}", True, (255, 255, 255))
+
+        screen.blit(health_text, (90, 12))
+
+        if upgrade_active:
+            for i, button in enumerate(upgrade_buttons):
+                mouse_pos = pygame.mouse.get_pos()
+
+                color = ((80, 140, 220) if button.collidepoint(mouse_pos) else (50, 100, 180))
+
+                pygame.draw.rect(screen, color, button, border_radius=0)
+
+                if i == 3:
+                    text = FONT_36.render(f"penetration ({pen_pick_count}/{pen_pick_required_count})", True, (255, 255, 255))
+                else:
+                    text = FONT_36.render(upgrade_names[i], True, (255, 255, 255))
+
+                text_rect = text.get_rect(center=button.center)
+                screen.blit(text, text_rect)
+
+    pygame.display.flip()
 
 pygame.quit()
