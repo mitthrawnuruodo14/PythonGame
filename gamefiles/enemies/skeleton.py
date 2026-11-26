@@ -19,6 +19,7 @@ class Skeleton(Enemy):
 			health=60,
 			damage=20,
 			speed=55,
+			worth=30,
 		)
 		self.cooldown=2.25
 		self.active_cooldown = self.cooldown
@@ -74,3 +75,4 @@ class Skeleton(Enemy):
 
 		if self.health <= 0.0:
 			world.entities.remove(self)
+			world.player.points += self.worth

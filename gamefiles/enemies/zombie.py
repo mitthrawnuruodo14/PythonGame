@@ -18,6 +18,7 @@ class Zombie(Enemy):
 			health=100,
 			damage=20,
 			speed=120,
+			worth=20,
 		)
 		self.cooldown=1.5
 		self.active_cooldown = self.cooldown
@@ -63,3 +64,4 @@ class Zombie(Enemy):
 
 		if self.health <= 0.0:
 			world.entities.remove(self)
+			world.player.points += self.worth

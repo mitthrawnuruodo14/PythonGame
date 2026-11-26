@@ -18,6 +18,7 @@ class Splitter(Enemy):
 			health=health,
 			damage=20,
 			speed=speed,
+			worth=25,
 		)
 		self.level = level
 		self.cooldown=1.5
@@ -69,3 +70,4 @@ class Splitter(Enemy):
 				world.entities.append(Splitter(self.pos.x - self.width/2, self.pos.y, self.original_health/2, self.level - 1, self.speed*2))
 
 			world.entities.remove(self)
+			world.player.points += self.worth * self.level

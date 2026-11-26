@@ -42,6 +42,7 @@ class Player(Humanoid):
         self.kill_count = 0
         self.split_upgrade_level_base = 0
         self.split_upgrade_level = self.split_upgrade_level_base
+        self.points = 0
         
     def update(self, world, screen, inputs: list, delta_time):
         self.color = RED if self.active_hit_indicator_duration > 0.0 else WHITE

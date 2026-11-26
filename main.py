@@ -137,6 +137,7 @@ while is_game_running:
             world.player.damage = world.player.damage_base
             world.player.penetration = world.player.penetration_base
             world.player.split_upgrade_level = world.player.split_upgrade_level_base
+            world.player.points = 0
             world.player.pos = pygame.Vector2(0, 0)
 
             time_passed = 0
@@ -193,6 +194,10 @@ while is_game_running:
         health_text = FONT_36.render(f"{world.player.health}/{world.player.max_health}", True, (255, 255, 255))
 
         screen.blit(health_text, (90, 12))
+
+        points_text = FONT_36.render(f"{world.player.points}", True, (255, 255, 255))
+        
+        screen.blit(points_text, (screen.get_rect().width//2 - 20, 12))
 
         if upgrade_active:
             for i, button in enumerate(upgrade_buttons):

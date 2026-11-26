@@ -19,6 +19,7 @@ class Rammer(Enemy):
 			health=60,
 			damage=20,
 			speed=100,
+			worth=30,
 		)
 		self.cooldown = 4
 		self.active_cooldown = self.cooldown
@@ -101,3 +102,4 @@ class Rammer(Enemy):
 
 		if self.health <= 0.0:
 			world.entities.remove(self)
+			world.player.points += self.worth
