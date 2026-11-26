@@ -88,6 +88,7 @@ while is_game_running:
 
 		world.update_entities(screen, inputs, delta_time)
 
+
 		for entity in world.entities:
 			if entity.has_collision:
 				for _entity in world.entities:
@@ -100,6 +101,13 @@ while is_game_running:
 		screen.fill((30,30,30))
 
 		world.draw_screen(camera, screen)
+
+		health_bar_width = 250
+		health_bar_height = 25
+		pygame.draw.rect(screen, "red", pygame.Rect(12, 12, health_bar_width, health_bar_height))
+
+		player_health_ratio = world.player.health/world.player.max_health
+		pygame.draw.rect(screen, "green", pygame.Rect(12, 12, health_bar_width*player_health_ratio, health_bar_height))
 	
 	pygame.display.flip()
 
