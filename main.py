@@ -52,7 +52,7 @@ button_width = 220
 button_height = 100
 button_gap = 20
 
-total_width = button_width * 3 + button_gap * 2
+total_width = button_width * 5 + button_gap * 4
 start_x = (screen.get_width() - total_width) // 2
 
 upgrade_buttons = [
@@ -62,16 +62,19 @@ upgrade_buttons = [
         button_width,
         button_height
     )
-    for i in range(4)
+    for i in range(5)
 ]
 
 pen_pick_required_count = 2
 pen_pick_count = 0
+split_pick_required_count = 2
+split_pick_count = 0
 upgrade_names = [
     "More damage",
     "Heal",
     "Move speed",
-    "Penetration"
+    "Penetration",
+    "Split level"
 ]
 
 last_spawned_enemy_timestamp = 0
@@ -110,6 +113,12 @@ while is_game_running:
                                 pen_pick_count = 0
                             else:
                                 pen_pick_count += 1
+                        elif i == 4:
+                            if (split_pick_count >= split_pick_required_count - 1):
+                                world.player.split_upgrade_level += 1
+                                split_pick_count = 0
+                            else:
+                                split_pick_count += 1
 
                         upgrade_active = False
                         last_upgrade_timestamp = time_passed
@@ -127,6 +136,7 @@ while is_game_running:
             world.player.speed = world.player.speed_base
             world.player.damage = world.player.damage_base
             world.player.penetration = world.player.penetration_base
+            world.player.split_upgrade_level = world.player.split_upgrade_level_base
             world.player.pos = pygame.Vector2(0, 0)
 
             time_passed = 0
@@ -193,7 +203,9 @@ while is_game_running:
                 pygame.draw.rect(screen, color, button, border_radius=0)
 
                 if i == 3:
-                    text = FONT_36.render(f"penetration ({pen_pick_count}/{pen_pick_required_count})", True, (255, 255, 255))
+                    text = FONT_36.render(f"penentration ({pen_pick_count}/{pen_pick_required_count})", True, (255, 255, 255))
+                elif i == 4:
+                    text = FONT_36.render(f"Split level ({split_pick_count}/{split_pick_required_count})", True, (255, 255, 255))
                 else:
                     text = FONT_36.render(upgrade_names[i], True, (255, 255, 255))
 
