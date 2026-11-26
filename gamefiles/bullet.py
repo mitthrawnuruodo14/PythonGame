@@ -4,7 +4,7 @@ from gamefiles.entity import Entity
 from gamefiles.humanoid import Humanoid
 
 class Bullet(Entity):
-	def __init__(self, parent: Entity, pos: pygame.Vector2, size: tuple[int, int], orientation: float, speed: int, damage: int, penetrate_count: int):
+	def __init__(self, parent: Entity, pos: pygame.Vector2, size: tuple[int, int], orientation: float, speed: int, damage: int, penetrate_count: int,split_count: int = 0,ignore_entities: list | None = None ):
 		super().__init__(
 			pos=pygame.Vector2(pos),
 			size=size,
@@ -18,7 +18,22 @@ class Bullet(Entity):
 		self.speed = speed
 		self.damage = damage
 		self.penetrate_count = penetrate_count
-		self.entities_hit = []
+		self.entities_hit = list(ignore_entities) if ignore_entities else []
+		self.split_count = split_count
+
+	def spawn_split_bullets(self, world):
+		for angle_offset in (-1.57,1.57):
+			new_bullet = Bullet(
+                parent=self.parent,
+                pos=self.pos.copy(),
+                size=(self.width, self.height),
+                orientation=self.orientation + angle_offset,
+                speed=self.speed,
+                damage=self.damage,
+                penetrate_count=1,
+                split_count=self.split_count - 1,
+                ignore_entities=self.entities_hit)
+			world.entities.append(new_bullet)
 
 	def update(self, world, screen, inputs, delta_time):
 		if self.parent != world.player:
@@ -36,6 +51,9 @@ class Bullet(Entity):
 					if self.get_rect().colliderect(entity.get_rect()):
 						entity.get_hit(self.damage, world)
 						self.entities_hit.append(entity)
+
+						if len(self.entities_hit) >= 1 and self.split_count > 0:
+							self.spawn_split_bullets(world)
 
 						self.penetrate_count -= 1
 						if self.penetrate_count == 0:

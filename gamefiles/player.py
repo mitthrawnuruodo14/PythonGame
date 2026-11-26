@@ -18,7 +18,12 @@ class Player(Humanoid):
                 z_index=0,
             ),
             health=100,
+<<<<<<< Updated upstream
             speed=200
+=======
+            speed=150,
+            
+>>>>>>> Stashed changes
         )
         self.health = 100
         self.hit_indicator_duration = 0.125
@@ -32,6 +37,8 @@ class Player(Humanoid):
         self.dash_distance = 400
         self.direction = pygame.Vector2(0, 0)
         self.move_state = "normal"
+        self.kill_count = 0,
+        self.split_upgrade_level = 6
         
     def update(self, world, screen, inputs: list, delta_time):
         self.color = RED if self.active_hit_indicator_duration > 0.0 else WHITE
@@ -77,7 +84,8 @@ class Player(Humanoid):
                 angle = math.atan2(direction.y, direction.x)
                 
                 bullet_pos = pygame.Vector2(self.pos.x + self.width/2, self.pos.y + self.height/2)
-                world.entities.append(Bullet(self, bullet_pos, (10, 10), angle, 1200, 20, 1))
+                world.entities.append(Bullet(self, bullet_pos, (10, 10), angle, 1200, 20, 1, self.split_upgrade_level))
+
 
                 self.active_shoot_cooldown = self.shoot_cooldown
 
