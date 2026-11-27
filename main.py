@@ -1,4 +1,5 @@
 import math
+import time
 import random
 from copy import copy
 import pygame  # type: ignore
@@ -81,9 +82,9 @@ last_spawned_enemy_timestamp = 0
 next_upgrade_points = 100
 upgrade_step = 1000
 time_passed = 0
+upgrade_just_appeared = False
 
 is_game_running = True
-
 while is_game_running:
     delta_time = clock.tick(120) / 1000.0
 
@@ -169,6 +170,7 @@ while is_game_running:
 
         if min(world.player.points, next_upgrade_points) == next_upgrade_points and not upgrade_active:
             upgrade_active = True
+            upgrade_just_appeared = True
 
         if not upgrade_active:
             world.update_entities(screen, inputs, delta_time)
@@ -224,5 +226,10 @@ while is_game_running:
                 screen.blit(text, text_rect)
 
     pygame.display.flip()
+
+    if upgrade_just_appeared:
+        time.sleep(0.5)
+        upgrade_just_appeared = False
+
 
 pygame.quit()
