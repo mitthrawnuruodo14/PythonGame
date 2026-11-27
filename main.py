@@ -81,6 +81,7 @@ upgrade_names = [
 last_spawned_enemy_timestamp = 0
 next_upgrade_points = 100
 upgrade_step = 1000
+upgrade_counter = 0
 time_passed = 0
 upgrade_just_appeared = False
 
@@ -122,7 +123,8 @@ while is_game_running:
                                 split_pick_count += 1
 
                         upgrade_active = False
-                        next_upgrade_points += upgrade_step
+                        next_upgrade_points += upgrade_step * (1 + upgrade_counter * 0.25)
+                        upgrade_counter += 1
 
         if not upgrade_active:
             time_passed += delta_time
